@@ -27,10 +27,32 @@ export default async function handler(req: any, res: any) {
 
       let webhook_data = req.body
 
-      console.log(webhook_data, 'e1')
-      console.log(webhook_data[0].events.nft)
-      console.log(webhook_data[0].events.nft.nfts[0])
+      console.log("data1: ", webhook_data)
+      console.log("data2: ", webhook_data[0].events.nft)
+      console.log("data3: ",webhook_data[0].events.nft.nfts[0])
       let token: any = await getAsset(webhook_data[0].events.nft.nfts[0].mint)
+
+      // Set title based on webhook_data.type
+      let title;
+      
+      let price_name;
+      switch (webhook_data[0].events.nft.type) {
+        case 'NFT_SALE':
+          title = `${token.content.metadata.name} has been sold!`;
+          price_name = ":moneybag:  Sale Price";
+          break;
+        case 'NFT_LISTING':
+          title = `${token.content.metadata.name} has been listed.`;
+          price_name = ":moneybag:  Listing Price";
+          break;
+        case 'NFT_BID':
+          title = `New bid on ${token.content.metadata.name}.`;
+          price_name = ":moneybag:  Highest Bid";
+          break;
+        default:
+          title = `${token.content.metadata.name} has been sold!`; // Default to sale if type is not recognized
+          price_name = ":moneybag:  Sale Price"; // Default to sale if type is not recognized
+      }
 
       const response = await fetch(webhook, {
         method: 'POST',
@@ -42,7 +64,7 @@ export default async function handler(req: any, res: any) {
           "content": null,
           "embeds": [
             {
-              "title": token.content.metadata.name + " has sold!",
+              "title": title,
               "url": `https://solscan.io/token/${webhook_data[0].events.nft.nfts[0].mint}`,
               "color": 16486972,
               "fields": [
@@ -55,12 +77,12 @@ export default async function handler(req: any, res: any) {
                   "value": "\ "
                 },
                 {
-                  "name": ":moneybag:  Sale Price",
+                  "name": price_name,
                   "value": "**" + (webhook_data[0].events.nft.amount / 1000000000).toFixed(2) + " " + "SOL**",
                   "inline": true
                 },
                 {
-                  "name": ":date:  Sale Date",
+                  "name": ":date: Date",
                   "value": `<t:${webhook_data[0].timestamp}:R>`,
                   "inline": true
                 },
@@ -68,16 +90,16 @@ export default async function handler(req: any, res: any) {
                   "name": "\ ",
                   "value": "\ "
                 },
-                {
-                  "name": "Buyer",
-                  "value": webhook_data[0].events.nft.buyer.slice(0, 4) + '..' + webhook_data[0].events.nft.buyer.slice(-4),
-                  "inline": true
-                },
-                {
-                  "name": "Seller",
-                  "value": webhook_data[0].events.nft.seller.slice(0, 4) + '..' + webhook_data[0].events.nft.seller.slice(-4),
-                  "inline": true
-                }
+                // {
+                //   "name": "Buyer",
+                //   "value": webhook_data[0].events.nft.buyer.slice(0, 4) + '..' + webhook_data[0].events.nft.buyer.slice(-4),
+                //   "inline": true
+                // },
+                // {
+                //   "name": "Seller",
+                //   "value": webhook_data[0].events.nft.seller.slice(0, 4) + '..' + webhook_data[0].events.nft.seller.slice(-4),
+                //   "inline": true
+                // }
               ],
               "image": {
                 "url": token.content.files[0].uri
