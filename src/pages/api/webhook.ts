@@ -27,14 +27,16 @@ export default async function handler(req: any, res: any) {
 
       let webhook_data = req.body
 
-      console.log("data1: ", webhook_data)
+      console.log(webhook_data, "e1")
       console.log("data2: ", webhook_data[0].events.nft)
       console.log("data3: ",webhook_data[0].events.nft.nfts[0])
       let token: any = await getAsset(webhook_data[0].events.nft.nfts[0].mint)
+      
+      console.log("token: ",token)
+      console.log("type: ",webhook_data[0].events.nft.type)
 
       // Set title based on webhook_data.type
       let title;
-      
       let price_name;
       switch (webhook_data[0].events.nft.type) {
         case 'NFT_SALE':
@@ -53,6 +55,8 @@ export default async function handler(req: any, res: any) {
           title = `${token.content.metadata.name} has been sold!`; // Default to sale if type is not recognized
           price_name = ":moneybag:  Sale Price"; // Default to sale if type is not recognized
       }
+
+      console.log(title, price_name)
 
       const response = await fetch(webhook, {
         method: 'POST',
