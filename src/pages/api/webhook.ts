@@ -29,15 +29,15 @@ export default async function handler(req: any, res: any) {
 
       try {
         console.log(webhook_data, "e1")
-        // console.log(webhook_data[0])
-        // console.log(webhook_data[0].accountData)
-        // console.log("data2: ", webhook_data[0].events.nft)
-        // console.log("data3: ", webhook_data[0].events.nft.nfts[0])
+        console.log(webhook_data[0])
+        console.log(webhook_data[0].accountData)
+        console.log("data2: ", webhook_data[0].events.nft)
+        console.log("data3: ", webhook_data[0].events.nft.nfts[0])
         
-      // }
-      // catch (error){
-      //   console.log(error)
-      // }
+      }
+      catch (error){
+        console.log(error)
+      }
 
       // console.log("token: ", token)
       console.log("type: ", webhook_data[0].events.nft.type)
