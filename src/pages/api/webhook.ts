@@ -124,11 +124,11 @@ export default async function handler(req: any, res: any) {
               "image": {
                 "url": token.content.files[0].uri
               },
-              // timestamp: new Date().toISOString(),
-              // "footer": {
-              //   "text": "Helius",
-              //   "icon_url": "https://assets-global.website-files.com/641a8c4cac3aee8bd266fd58/642b5b2804ea37191a59737b_favicon-32x32.png",
-              // }
+              timestamp: new Date().toISOString(),
+              "footer": {
+                "text": "Helius",
+                "icon_url": "https://assets-global.website-files.com/641a8c4cac3aee8bd266fd58/642b5b2804ea37191a59737b_favicon-32x32.png",
+              }
             }
           ],
 
