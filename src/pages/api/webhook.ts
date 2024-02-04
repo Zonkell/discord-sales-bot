@@ -27,17 +27,17 @@ export default async function handler(req: any, res: any) {
 
       let webhook_data = req.body
 
-      try {
-        console.log(webhook_data, "e1")
-        console.log(webhook_data[0])
-        console.log(webhook_data[0].accountData)
-        console.log("data2: ", webhook_data[0].events.nft)
-        console.log("data3: ", webhook_data[0].events.nft.nfts[0])
+      // try {
+      //   console.log(webhook_data, "e1")
+      //   console.log(webhook_data[0])
+      //   console.log(webhook_data[0].accountData)
+      //   console.log("data2: ", webhook_data[0].events.nft)
+      //   console.log("data3: ", webhook_data[0].events.nft.nfts[0])
         
-      }
-      catch (error){
-        console.log(error)
-      }
+      // }
+      // catch (error){
+      //   console.log(error)
+      // }
 
       // console.log("token: ", token)
       console.log("type: ", webhook_data[0].events.nft.type)
@@ -63,7 +63,7 @@ export default async function handler(req: any, res: any) {
           break;
         case 'NFT_BID':
           title = `New bid on ${token.content.metadata.name}.`;
-          price_name = ":moneybag:  Highest Bid";
+          price_name = ":moneybag:  New Bid";
           break;
         default:
           title = `${token.content.metadata.name} has been sold!`; // Default to sale if type is not recognized
