@@ -28,6 +28,8 @@ export default async function handler(req: any, res: any) {
       let webhook_data = req.body
 
       console.log(webhook_data, "e1")
+      console.log(webhook_data[0])
+      console.log(webhook_data[0].accountData)
       console.log("data2: ", webhook_data[0].events.nft)
       console.log("data3: ",webhook_data[0].events.nft.nfts[0])
       let token: any = await getAsset(webhook_data[0].events.nft.nfts[0].mint)
