@@ -28,10 +28,10 @@ export default async function handler(req: any, res: any) {
       let webhook_data = req.body
 
       // try {
-      //   console.log(webhook_data, "e1")
-      //   console.log(webhook_data[0])
-      //   console.log(webhook_data[0].accountData)
-      //   console.log("data2: ", webhook_data[0].events.nft)
+        console.log(webhook_data, "e1")
+        // console.log(webhook_data[0])
+        // console.log(webhook_data[0].accountData)
+        console.log("data2: ", webhook_data[0].events.nft)
       //   console.log("data3: ", webhook_data[0].events.nft.nfts[0])
         
       // }
@@ -57,19 +57,19 @@ export default async function handler(req: any, res: any) {
       switch (webhook_data[0].events.nft.type) {
         case 'NFT_SALE':
           title = `${token.content.metadata.name} has been sold!`;
-          price_name = ":moneybag:  Sale Price";
+          price_name = "Sale Price";
           break;
         case 'NFT_LISTING':
           title = `${token.content.metadata.name} has been listed.`;
-          price_name = ":moneybag:  Listing Price";
+          price_name = "Listing Price";
           break;
         case 'NFT_BID':
           title = `New bid on ${token.content.metadata.name}.`;
-          price_name = ":moneybag:  New Bid";
+          price_name = "New Bid";
           break;
         default:
           title = `${token.content.metadata.name} has been sold!`; // Default to sale if type is not recognized
-          price_name = ":moneybag:  Sale Price"; // Default to sale if type is not recognized
+          price_name = "Sale Price"; // Default to sale if type is not recognized
       }
 
       const response = await fetch(webhook, {
@@ -86,14 +86,14 @@ export default async function handler(req: any, res: any) {
               "url": `https://solscan.io/token/${address}`,
               "color": 10272442,
               "fields": [
-                {
-                  "name": "\ ",
-                  "value": "\ "
-                },
-                {
-                  "name": "\ ",
-                  "value": "\ "
-                },
+                // {
+                //   "name": "\ ",
+                //   "value": "\ "
+                // },
+                // {
+                //   "name": "\ ",
+                //   "value": "\ "
+                // },
                 {
                   "name": price_name,
                   "value": "**" + (webhook_data[0].events.nft.amount / 1000000000).toFixed(2) + " " + "SOL**",
@@ -122,11 +122,11 @@ export default async function handler(req: any, res: any) {
               "image": {
                 "url": token.content.files[0].uri
               },
-              timestamp: new Date().toISOString(),
-              "footer": {
-                "text": "Helius",
-                "icon_url": "https://assets-global.website-files.com/641a8c4cac3aee8bd266fd58/642b5b2804ea37191a59737b_favicon-32x32.png",
-              }
+              // timestamp: new Date().toISOString(),
+              // "footer": {
+              //   "text": "Helius",
+              //   "icon_url": "https://assets-global.website-files.com/641a8c4cac3aee8bd266fd58/642b5b2804ea37191a59737b_favicon-32x32.png",
+              // }
             }
           ],
 
