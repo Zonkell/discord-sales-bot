@@ -87,7 +87,7 @@ export default async function handler(req: any, res: any) {
           "embeds": [
             {
               "title": title,
-              "url": `https://solscan.io/token/${token}`,
+              "url": `https://solscan.io/token/${address}`,
               "color": 10272442,
               "fields": [
                 {
