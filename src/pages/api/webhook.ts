@@ -39,7 +39,7 @@ export default async function handler(req: any, res: any) {
       
       let address;
       if (!webhook_data[0].events.nft.nfts.length){
-        address = webhook_data[0].instructions[0].innerInstructions[0].accounts[0]
+        address = webhook_data[0].accountData[4].account
       }else{
         address = webhook_data[0].events.nft.nfts[0].mint;
       }
