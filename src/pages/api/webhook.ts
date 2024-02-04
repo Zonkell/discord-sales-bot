@@ -38,8 +38,8 @@ export default async function handler(req: any, res: any) {
       let marketplace = webhook_data[0].events.nft.source
       
       let address;
-      if (type == "NFT_BID" && saleType == "OFFER"){
-        address = webhook_data[0].accountData[4].account
+      if (!webhook_data[0].events.nft.nfts.length){
+        address = webhook_data[0].instructions[0].innerInstructions[0].accounts[0]
       }else{
         address = webhook_data[0].events.nft.nfts[0].mint;
       }
@@ -61,7 +61,7 @@ export default async function handler(req: any, res: any) {
           price_name = "Listing Price";
           break;
         case 'NFT_BID':
-          if (webhook_data[0].events.nft.saleType == "OFFER"){
+          if (saleType == "OFFER"){
             title = `New offer on ${token.content.metadata.name}`;
             price_name = "Offer";
           }else{
