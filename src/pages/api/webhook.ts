@@ -45,13 +45,15 @@ export default async function handler(req: any, res: any) {
       console.log(webhook_data[0].accountData);
       console.log(webhook_data[0].accountData[4]);
       console.log(webhook_data[0].accountData[4].account)
-      let token: any;
+      
+      let address;
       if (webhook_data[0].events.nft.type == "NFT_BID"){
-        token = await getAsset(webhook_data[0].accountData[4].account);
+        address = webhook_data[0].accountData[4].account
       }else{
-        token = await getAsset(webhook_data[0].events.nft.nfts[0].mint);
+        address = webhook_data[0].events.nft.nfts[0].mint;
       }
       
+      let token: any = await getAsset(address);
 
       // Set title based on webhook_data.type
       let title;
