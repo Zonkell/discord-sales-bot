@@ -27,45 +27,46 @@ export default async function handler(req: any, res: any) {
 
       let webhook_data = req.body
 
-      // try {
-        console.log(webhook_data, "e1")
-        // console.log(webhook_data[0])
-        // console.log(webhook_data[0].accountData)
-        console.log("data2: ", webhook_data[0].events.nft)
-      //   console.log("data3: ", webhook_data[0].events.nft.nfts[0])
-        
-      // }
-      // catch (error){
-      //   console.log(error)
-      // }
 
-      // console.log("token: ", token)
-      console.log("type: ", webhook_data[0].events.nft.type);
+      console.log("data1:" ,webhook_data[0])
+      console.log("data2: ", webhook_data[0].events.nft)
+
+      let type = webhook_data[0].events.nft.type; 
+      
+      // saleType = "OFFER" OR "AUCTION" or something else?
+      let saleType = webhook_data[0].events.nft.saleType; 
       
       let address;
-      if (webhook_data[0].events.nft.type == "NFT_BID"){
+      if (type == "NFT_BID" && saleType == "OFFER"){
         address = webhook_data[0].accountData[4].account
       }else{
         address = webhook_data[0].events.nft.nfts[0].mint;
       }
-      
+
+      // Get the token data
       let token: any = await getAsset(address);
 
-      // Set title based on webhook_data.type
       let title;
       let price_name;
+      
+      // title = `${token.content.metadata.name} has been sold!`;
       switch (webhook_data[0].events.nft.type) {
         case 'NFT_SALE':
-          title = `${token.content.metadata.name} has been sold!`;
+          title = `${token.content.metadata.name} has been sold`;
           price_name = "Sale Price";
           break;
         case 'NFT_LISTING':
-          title = `${token.content.metadata.name} has been listed.`;
+          title = `${token.content.metadata.name} has been listed`;
           price_name = "Listing Price";
           break;
         case 'NFT_BID':
-          title = `New bid on ${token.content.metadata.name}.`;
-          price_name = "New Bid";
+          if (webhook_data[0].events.nft.saleType == "OFFER"){
+            title = `New offer on ${token.content.metadata.name}`;
+            price_name = "Offer";
+          }else{
+            title = `New bid on ${token.content.metadata.name}`;
+            price_name = "Bid";
+          }
           break;
         default:
           title = `${token.content.metadata.name} has been sold!`; // Default to sale if type is not recognized
@@ -82,8 +83,7 @@ export default async function handler(req: any, res: any) {
           "content": null,
           "embeds": [
             {
-              "title": title,
-              "url": `https://solscan.io/token/${address}`,
+              "title": `**${title}**`,
               "color": 10272442,
               "fields": [
                 // {
@@ -100,14 +100,14 @@ export default async function handler(req: any, res: any) {
                   "inline": true
                 },
                 {
-                  "name": "Date",
-                  "value": `<t:${webhook_data[0].timestamp}:R>`,
+                  "name": "Marketplace",
+                  "value": webhook_data[0].events.nft.source,
                   "inline": true
                 },
-                {
-                  "name": "\ ",
-                  "value": "\ "
-                },
+                // {
+                //   "name": "\ ",
+                //   "value": "\ "
+                // },
                 // {
                 //   "name": "Buyer",
                 //   "value": webhook_data[0].events.nft.buyer.slice(0, 4) + '..' + webhook_data[0].events.nft.buyer.slice(-4),
