@@ -85,8 +85,8 @@ export default async function handler(req: any, res: any) {
           "embeds": [
             {
               "title": title,
-              "url": `https://solscan.io/token/${webhook_data[0].events.nft.nfts[0].mint}`,
-              "color": 16486972,
+              "url": `https://solscan.io/token/${token}`,
+              "color": 10272442,
               "fields": [
                 {
                   "name": "\ ",
@@ -102,7 +102,7 @@ export default async function handler(req: any, res: any) {
                   "inline": true
                 },
                 {
-                  "name": ":date: Date",
+                  "name": "Date",
                   "value": `<t:${webhook_data[0].timestamp}:R>`,
                   "inline": true
                 },
@@ -124,11 +124,11 @@ export default async function handler(req: any, res: any) {
               "image": {
                 "url": token.content.files[0].uri
               },
-              timestamp: new Date().toISOString(),
-              "footer": {
-                "text": "Helius",
-                "icon_url": "https://assets-global.website-files.com/641a8c4cac3aee8bd266fd58/642b5b2804ea37191a59737b_favicon-32x32.png",
-              }
+              // timestamp: new Date().toISOString(),
+              // "footer": {
+              //   "text": "Helius",
+              //   "icon_url": "https://assets-global.website-files.com/641a8c4cac3aee8bd266fd58/642b5b2804ea37191a59737b_favicon-32x32.png",
+              // }
             }
           ],
 
