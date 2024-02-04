@@ -35,6 +35,7 @@ export default async function handler(req: any, res: any) {
       
       // saleType = "OFFER" OR "AUCTION" or something else?
       let saleType = webhook_data[0].events.nft.saleType; 
+      let marketplace = webhook_data[0].events.nft.source
       
       let address;
       if (type == "NFT_BID" && saleType == "OFFER"){
@@ -101,7 +102,7 @@ export default async function handler(req: any, res: any) {
                 },
                 {
                   "name": "Marketplace",
-                  "value": webhook_data[0].events.nft.source,
+                  "value": marketplace,
                   "inline": true
                 },
                 // {
@@ -133,7 +134,7 @@ export default async function handler(req: any, res: any) {
         },
         ),
       });
-      console.log(response)
+      // console.log(response)
       res.status(200).json("success")
 
     };
