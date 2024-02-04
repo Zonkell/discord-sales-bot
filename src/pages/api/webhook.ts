@@ -41,10 +41,6 @@ export default async function handler(req: any, res: any) {
 
       // console.log("token: ", token)
       console.log("type: ", webhook_data[0].events.nft.type);
-      console.log(webhook_data[0].events.nft.type == "NFT_BID");
-      console.log(webhook_data[0].accountData);
-      console.log(webhook_data[0].accountData[4]);
-      console.log(webhook_data[0].accountData[4].account)
       
       let address;
       if (webhook_data[0].events.nft.type == "NFT_BID"){
